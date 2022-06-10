@@ -1,0 +1,19 @@
+.header{
+  height: 15vmin;
+  width: 100%;
+
+  .header-container{
+    width: 80%;
+    margin: 0 auto;
+    height: inherit;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .title{
+    font-size: calc(2rem + 1.5vmin);
+    line-height: calc(2.2rem + 1.5vmin);
+  }
+}

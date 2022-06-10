@@ -1,0 +1,25 @@
+<div class="note-block-item">
+  <div class="title-block">
+    <p class="big-title my-title">Note # {{ note.id }}</p>
+    <div class="icon-block">
+      <button mat-icon-button aria-label="Example icon" class="more-btn">
+        <mat-icon color="accent" >more_vert</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="Example icon" class="edit-btn">
+        <mat-icon color="primary">edit</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="Example icon" class="delete-btn">
+        <mat-icon color="primary">delete</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="note-block">
+    <p class="title my-title">{{ note.text }}</p>
+  </div>
+  <div class="mark-block">
+    <ng-container *ngFor="let mark of note.mark">
+      <p class="mini-title my-title">#{{mark}}</p>
+    </ng-container>
+
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<main class="main">
+  <app-filter-block></app-filter-block>
+  <button mat-raised-button color="primary">Add new note</button>
+  <div class="notes-block">
+    <ng-container *ngIf="(notesService.allNotes$ | async) as notes">
+      <ng-container *ngFor="let note of notes; let i = index">
+        <app-note [note]="note"></app-note>
+      </ng-container>
+    </ng-container>
+  </div>
+</main>
+

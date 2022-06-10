@@ -1,0 +1,34 @@
+{
+  "notes": [
+    {
+      "id": 1,
+      "text": "Need to go #shopping",
+      "mark": ["shopping"]
+    },
+    {
+      "id": 2,
+      "text": "find new #job",
+      "mark": ["job"]
+    },
+    {
+      "id": 3,
+      "text": "#clean up the house",
+      "mark": ["clean"]
+    },
+    {
+      "id": 4,
+      "text": "configure the #project",
+      "mark": ["project"]
+    },
+    {
+      "id": 5,
+      "text": "redesign the #project",
+      "mark": ["project"]
+    },
+    {
+      "id": 6,
+      "text": "Spend time for #hobby, #family",
+      "mark": ["hobby", "family"]
+    }
+  ]
+}

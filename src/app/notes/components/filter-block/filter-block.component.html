@@ -1,10 +1,12 @@
 <div class="filter-block">
-  <mat-form-field appearance="fill">
-    <mat-label>Filter options</mat-label>
-    <mat-select multiple (change)="handleSelect($event)">
-      <ng-container *ngIf="(filterMarks | async) as marks">
-        <mat-option *ngFor="let mark of marks" [value]="mark" [selected]="selectedMark === mark">{{mark}}</mat-option>
-      </ng-container>
-    </mat-select>
-  </mat-form-field>
+  <form [formGroup]="form">
+    <mat-form-field class="select" appearance="fill">
+      <mat-label class="my-title">Filter options</mat-label>
+      <mat-select  formControlName="mark" name="mark" #select="matSelect" multiple>
+        <ng-container *ngIf="(filterMarks | async) as marks">
+          <mat-option *ngFor="let mark of marks" [value]="mark">{{mark}}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </form>
 </div>

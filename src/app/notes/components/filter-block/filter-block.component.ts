@@ -1,9 +1,12 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable class-methods-use-this */
-import { SelectionChange } from '@angular/cdk/collections';
-import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatOptionSelectionChange } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
 import { Observable, map } from 'rxjs';
 import { INote } from '../../interfaces/INotes';
+import { MarksService } from '../../services/marks.service';
 
 import { NotesService } from '../../services/notes.service';
 
@@ -12,29 +15,38 @@ import { NotesService } from '../../services/notes.service';
   templateUrl: './filter-block.component.html',
   styleUrls: ['./filter-block.component.scss'],
 })
-export class FilterBlockComponent {
+export class FilterBlockComponent implements AfterViewInit, OnInit {
+  @ViewChild('select') select: MatSelect;
+
   filterMarks: Observable<string[]>;
 
-  toppings:FormControl;
+  form: FormGroup;
 
-  selectedMark: null | string;
+  mark: FormControl;
 
   constructor(
     public notesService: NotesService,
+    public marksService: MarksService,
   ) {
-    this.filterMarks = this.notesService.allNotes$.pipe(
-      map((notesArr: INote[]) => notesArr.map((elem: INote) => elem.mark)),
-      map((marksArr: string[]) => {
-        const newSet = new Set(marksArr.flat(2));
-        return [...newSet];
-      }),
-    );
+    this.filterMarks = this.marksService.allMarks$;
 
-    this.toppings = new FormControl('');
-    this.selectedMark = null;
+    this.mark = new FormControl('');
+    this.form = new FormGroup({
+      mark: this.mark,
+    });
   }
 
-  handleSelect(event: Event) {
-    console.log(event);
+  ngOnInit(): void {
+    this.marksService.updateMarks();
+  }
+
+  ngAfterViewInit() {
+    this.select.optionSelectionChanges
+      .subscribe((res:MatOptionSelectionChange) => this.handleSelect(res));
+  }
+
+  handleSelect(event: MatOptionSelectionChange) {
+    const chosenValue = event.source.value;
+    this.notesService.changeFilterValue(chosenValue);
   }
 }

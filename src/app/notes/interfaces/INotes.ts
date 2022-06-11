@@ -5,5 +5,5 @@ export interface INotes {
 export interface INote {
   'id': number,
   'text': string,
-  'mark': string
+  'mark': string[]
 }

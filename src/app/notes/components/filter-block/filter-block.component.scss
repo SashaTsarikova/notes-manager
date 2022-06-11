@@ -1,0 +1,10 @@
+.filter-block {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  .select{
+    width: 20vw;
+    max-width: 300px;
+  }
+}

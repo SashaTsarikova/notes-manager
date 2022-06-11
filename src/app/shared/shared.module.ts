@@ -5,20 +5,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { MaterialModule } from './material/material.module';
 
+const MODULES = [
+  BrowserModule,
+  CommonModule,
+  MaterialModule,
+  HttpClientModule,
+  FormsModule,
+  ReactiveFormsModule,
+]
+
 @NgModule({
   declarations: [],
-  imports: [
-    BrowserModule,
-    CommonModule,
-    MaterialModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-  exports: [
-    CommonModule,
-    MaterialModule,
-    HttpClientModule,
-  ],
+  imports: MODULES,
+  exports: MODULES,
 })
 export class SharedModule { }

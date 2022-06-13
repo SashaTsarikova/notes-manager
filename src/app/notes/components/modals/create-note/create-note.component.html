@@ -1,0 +1,14 @@
+<div class="wrapper">
+  <p class="modal_headline">Create Your new note!</p>
+  <form class="title-form" [formGroup]="titleForm" (submit)="onSubmit()">
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Create new note</mat-label>
+      <input matInput formControlName="text" placeholder="Your note text" autocomplete="off">
+      <mat-error *ngIf="titleForm.get('title')?.hasError('required')">you should add some text</mat-error>
+    </mat-form-field>
+  </form>
+  <div class="title-form_buttons">
+    <button (click)="reject()" mat-raised-button color="accent">cancel</button>
+    <button (click)="confirm()" type="submit" [disabled]="titleForm.invalid" mat-raised-button color="primary">create</button>
+  </div>
+</div>

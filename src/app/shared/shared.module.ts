@@ -12,7 +12,7 @@ const MODULES = [
   HttpClientModule,
   FormsModule,
   ReactiveFormsModule,
-]
+];
 
 @NgModule({
   declarations: [],

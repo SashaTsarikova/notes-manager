@@ -5,10 +5,10 @@
       <button mat-icon-button aria-label="Example icon" class="more-btn">
         <mat-icon color="accent" >more_vert</mat-icon>
       </button>
-      <button mat-icon-button aria-label="Example icon" class="edit-btn">
+      <button mat-icon-button aria-label="Example icon" class="edit-btn" (click)="updateNote()">
         <mat-icon color="primary">edit</mat-icon>
       </button>
-      <button mat-icon-button aria-label="Example icon" class="delete-btn">
+      <button mat-icon-button aria-label="Example icon" class="delete-btn" (click)="deleteNote()">
         <mat-icon color="primary">delete</mat-icon>
       </button>
     </div>

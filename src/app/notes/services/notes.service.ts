@@ -16,6 +16,14 @@ export class NotesService {
 
   private filterArr: string[];
 
+  private newNotesArr: INote[] = [];
+
+  private updatedNotesArr: INote[] = [];
+
+  private deletedNotesArr: INote[] = [];
+
+  public notesCount: number = 0;
+
   constructor(
     private http: HttpClient,
   ) {
@@ -25,6 +33,7 @@ export class NotesService {
   updateNotes() {
     this.getAllNotes()
       .subscribe((res: INote[]) => {
+        this.notesCount = res.length;
         this.allNotesSubject.next(res);
       });
   }
@@ -32,7 +41,8 @@ export class NotesService {
   getAllNotes(): Observable<INote[]> {
     return this.http.get<INotes>('assets/notes/startNotes.json')
       .pipe(
-        map((res: INotes): INote[] => res.notes),
+        map((res: INotes): INote[] => res.notes.concat(this.newNotesArr)),
+        map(((res: INote[]): INote[] => this.changeValues(res))),
         map((res: INote[]): INote[] => {
           if (this.filterArr.length) {
             return res.filter((note: INote) => this.isInMarks(note.mark));
@@ -40,6 +50,54 @@ export class NotesService {
           return res;
         }),
       );
+  }
+
+  createNote(note: INote) {
+    this.newNotesArr.push(note);
+    this.updateNotes();
+    console.log(this.newNotesArr);
+  }
+
+  updateNote(note: INote) {
+    const indexArrNew = this.newNotesArr.map((elem: INote) => elem.id);
+    const indexArrUpdated = this.updatedNotesArr.map((elem: INote) => elem.id);
+    if (indexArrNew.find((elem: number) => elem === note.id)) {
+      const index = indexArrNew.findIndex((elem: number) => elem === note.id);
+      this.newNotesArr[index] = note;
+    }
+    if (indexArrUpdated.find((elem: number) => elem === note.id)) {
+      const index = indexArrUpdated.findIndex((elem: number) => elem === note.id);
+      this.updatedNotesArr[index] = note;
+    } else {
+      this.updatedNotesArr.push(note);
+    }
+    this.updateNotes();
+  }
+
+  deleteNote(note: INote) {
+    const indexArrNew = this.newNotesArr.map((elem: INote) => elem.id);
+    if (indexArrNew.find((elem: number) => elem === note.id)) {
+      const index = indexArrNew.findIndex((elem: number) => elem === note.id);
+      delete this.newNotesArr[index];
+    } else {
+      this.deletedNotesArr.push(note);
+    }
+    this.updateNotes();
+  }
+
+  changeValues(notesArr: INote[]): INote[] {
+    const indexArrUpdated = this.updatedNotesArr.map((elem: INote) => elem.id);
+    const indexArrDeleted = this.deletedNotesArr.map((elem: INote) => elem.id);
+    const newArr = notesArr.map((elem: INote) => {
+      if (indexArrUpdated.find((id: number) => id === elem.id)) {
+        return <INote> this.updatedNotesArr.find((note: INote) => note.id === elem.id);
+      }
+      if (indexArrDeleted.find((id: number) => id === elem.id)) {
+        return null;
+      }
+      return elem;
+    }).filter((elem: any) => !!elem);
+    return <INote[]>newArr;
   }
 
   changeFilterValue(mark: string) {

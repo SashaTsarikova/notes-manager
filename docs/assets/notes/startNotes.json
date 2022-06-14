@@ -1,0 +1,34 @@
+{
+  "notes": [
+    {
+      "id": "id642cb3572f1af",
+      "text": "Need to go #shopping",
+      "mark": ["shopping"]
+    },
+    {
+      "id": "idd8d2fb9ce20f9",
+      "text": "find new #job",
+      "mark": ["job"]
+    },
+    {
+      "id": "id42bae3fc89eaf",
+      "text": "#clean up the house",
+      "mark": ["clean"]
+    },
+    {
+      "id": "idc0676ab41e7fe",
+      "text": "configure the #project",
+      "mark": ["project"]
+    },
+    {
+      "id": "ida8a4ea54f2448",
+      "text": "redesign the #project",
+      "mark": ["project"]
+    },
+    {
+      "id": "id22dd5e943dd47",
+      "text": "Spend time for #hobby, #family",
+      "mark": ["hobby", "family"]
+    }
+  ]
+}

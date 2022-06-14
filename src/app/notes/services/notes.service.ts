@@ -2,7 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
-  BehaviorSubject, map, Observable, tap
+  BehaviorSubject, map, Observable, tap,
 } from 'rxjs';
 import { INote, INotes } from '../interfaces/INotes';
 import { MarksService } from './marks.service';
@@ -77,7 +77,7 @@ export class NotesService {
     const indexArrNew = this.newNotesArr.map((elem: INote) => elem.id);
     if (indexArrNew.find((elem: string) => elem === note.id)) {
       const index = indexArrNew.findIndex((elem: string) => elem === note.id);
-      delete this.newNotesArr[index];
+      this.newNotesArr.splice(index, 1);
     } else {
       this.deletedNotesArr.push(note);
     }
@@ -88,11 +88,11 @@ export class NotesService {
     const indexArrUpdated = this.updatedNotesArr.map((elem: INote) => elem.id);
     const indexArrDeleted = this.deletedNotesArr.map((elem: INote) => elem.id);
     const newArr = notesArr.map((elem: INote) => {
-      if (indexArrUpdated.find((id: string) => id === elem.id)) {
-        return <INote> this.updatedNotesArr.find((note: INote) => note.id === elem.id);
-      }
       if (indexArrDeleted.find((id: string) => id === elem.id)) {
         return null;
+      }
+      if (indexArrUpdated.find((id: string) => id === elem.id)) {
+        return <INote> this.updatedNotesArr.find((note: INote) => note.id === elem.id);
       }
       return elem;
     }).filter((elem: any) => !!elem);

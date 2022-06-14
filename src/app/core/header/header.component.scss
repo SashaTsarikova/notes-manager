@@ -17,3 +17,12 @@
     line-height: calc(2.2rem + 1.5vmin);
   }
 }
+
+@media (orientation: portrait) {
+  .header{
+    height: 15vh;
+    .title{
+      text-align: center;
+    }
+  }
+}

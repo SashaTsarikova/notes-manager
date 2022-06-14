@@ -9,3 +9,9 @@
     flex-wrap: wrap;
   }
 }
+
+@media (orientation: portrait) {
+  .main {
+    width: 92%;
+  }
+}

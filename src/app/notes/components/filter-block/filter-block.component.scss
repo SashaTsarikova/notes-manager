@@ -8,3 +8,21 @@
     max-width: 300px;
   }
 }
+
+@media (orientation: portrait) {
+  .filter-block {
+    .select{
+      width: 70vw;
+      margin: 2vh 0;
+    }
+  }
+}
+
+@media (orientation: landscape) and (max-width: 900px) {
+  .filter-block {
+    .select{
+      width: 50vw;
+      margin: 2vh 0;
+    }
+  }
+}

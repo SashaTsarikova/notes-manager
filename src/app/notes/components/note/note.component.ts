@@ -4,7 +4,6 @@ import {
 import { DialogService } from 'src/app/shared/dialogs/dialog.service';
 import { INote } from '../../interfaces/INotes';
 import { NotesService } from '../../services/notes.service';
-import { generateUniqID } from '../../utils/generateUnicID';
 import { getMarksArr } from '../../utils/getMarksArray';
 import { makeTextWithHighlight } from '../../utils/highlight';
 import { UpdateNoteComponent } from '../modals/update-note/update-note.component';
@@ -17,14 +16,14 @@ import { UpdateNoteComponent } from '../modals/update-note/update-note.component
 export class NoteComponent implements AfterViewInit {
   @Input() public note!: INote;
 
+  @Input() public index!: number;
+
   @ViewChild('title') title: ElementRef;
 
   constructor(
     public notesService: NotesService,
     private dialog: DialogService,
-  ) {
-    console.log(generateUniqID());
-  }
+  ) { }
 
   ngAfterViewInit(): void {
     this.title.nativeElement.innerHTML = makeTextWithHighlight(this.note.text);

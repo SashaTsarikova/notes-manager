@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DialogService } from 'src/app/shared/dialogs/dialog.service';
 import { CreateNoteComponent } from '../../components/modals/create-note/create-note.component';
 import { NotesService } from '../../services/notes.service';
+import { generateUniqID } from '../../utils/generateUnicID';
 import { getMarksArr } from '../../utils/getMarksArray';
 
 @Component({
@@ -25,7 +26,7 @@ export class NotesComponent implements OnInit {
       if (result) {
         this.notesService.createNote({
           ...result,
-          id: this.notesService.notesCount + 1,
+          id: generateUniqID(),
           mark: getMarksArr(result.text),
         });
       }

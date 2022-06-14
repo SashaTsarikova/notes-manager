@@ -2,9 +2,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
-  BehaviorSubject, map, Observable,
+  BehaviorSubject, map, Observable, tap
 } from 'rxjs';
 import { INote, INotes } from '../interfaces/INotes';
+import { MarksService } from './marks.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,10 +23,9 @@ export class NotesService {
 
   private deletedNotesArr: INote[] = [];
 
-  public notesCount: number = 0;
-
   constructor(
     private http: HttpClient,
+    private markService: MarksService,
   ) {
     this.filterArr = [];
   }
@@ -33,7 +33,6 @@ export class NotesService {
   updateNotes() {
     this.getAllNotes()
       .subscribe((res: INote[]) => {
-        this.notesCount = res.length;
         this.allNotesSubject.next(res);
       });
   }
@@ -43,6 +42,7 @@ export class NotesService {
       .pipe(
         map((res: INotes): INote[] => res.notes.concat(this.newNotesArr)),
         map(((res: INote[]): INote[] => this.changeValues(res))),
+        tap((res: INote[]): void => this.markService.getUpdatedNotes(res)),
         map((res: INote[]): INote[] => {
           if (this.filterArr.length) {
             return res.filter((note: INote) => this.isInMarks(note.mark));
@@ -55,18 +55,17 @@ export class NotesService {
   createNote(note: INote) {
     this.newNotesArr.push(note);
     this.updateNotes();
-    console.log(this.newNotesArr);
   }
 
   updateNote(note: INote) {
     const indexArrNew = this.newNotesArr.map((elem: INote) => elem.id);
     const indexArrUpdated = this.updatedNotesArr.map((elem: INote) => elem.id);
-    if (indexArrNew.find((elem: number) => elem === note.id)) {
-      const index = indexArrNew.findIndex((elem: number) => elem === note.id);
+    if (indexArrNew.find((elem: string) => elem === note.id)) {
+      const index = indexArrNew.findIndex((elem: string) => elem === note.id);
       this.newNotesArr[index] = note;
     }
-    if (indexArrUpdated.find((elem: number) => elem === note.id)) {
-      const index = indexArrUpdated.findIndex((elem: number) => elem === note.id);
+    if (indexArrUpdated.find((elem: string) => elem === note.id)) {
+      const index = indexArrUpdated.findIndex((elem: string) => elem === note.id);
       this.updatedNotesArr[index] = note;
     } else {
       this.updatedNotesArr.push(note);
@@ -76,8 +75,8 @@ export class NotesService {
 
   deleteNote(note: INote) {
     const indexArrNew = this.newNotesArr.map((elem: INote) => elem.id);
-    if (indexArrNew.find((elem: number) => elem === note.id)) {
-      const index = indexArrNew.findIndex((elem: number) => elem === note.id);
+    if (indexArrNew.find((elem: string) => elem === note.id)) {
+      const index = indexArrNew.findIndex((elem: string) => elem === note.id);
       delete this.newNotesArr[index];
     } else {
       this.deletedNotesArr.push(note);
@@ -89,10 +88,10 @@ export class NotesService {
     const indexArrUpdated = this.updatedNotesArr.map((elem: INote) => elem.id);
     const indexArrDeleted = this.deletedNotesArr.map((elem: INote) => elem.id);
     const newArr = notesArr.map((elem: INote) => {
-      if (indexArrUpdated.find((id: number) => id === elem.id)) {
+      if (indexArrUpdated.find((id: string) => id === elem.id)) {
         return <INote> this.updatedNotesArr.find((note: INote) => note.id === elem.id);
       }
-      if (indexArrDeleted.find((id: number) => id === elem.id)) {
+      if (indexArrDeleted.find((id: string) => id === elem.id)) {
         return null;
       }
       return elem;

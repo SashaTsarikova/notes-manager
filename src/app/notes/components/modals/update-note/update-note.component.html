@@ -3,13 +3,13 @@
   <form class="title-form" [formGroup]="editForm" (submit)="onSubmit()">
     <mat-form-field class="example-full-width" appearance="outline">
       <mat-label>put text to update</mat-label>
-      <input matInput formControlName="text" placeholder="Text to be typed">
+      <input matInput formControlName="text" placeholder="Text to be typed" autocomplete="off">
       <mat-error *ngIf="editForm.get('title')?.hasError('required')">there should be text</mat-error>
     </mat-form-field>
   </form>
   <div class="edit-task-form_buttons">
     <button (click)="reject()" mat-raised-button color="accent">cancel</button>
-    <button (click)="confirm()" type="submit" [disabled]="editForm.invalid" mat-raised-button color="primary">update</button>
+    <button (click)="confirm()" type="submit" [disabled]="editForm.invalid" mat-raised-button
+      color="primary">update</button>
   </div>
 </div>
-

@@ -4,7 +4,7 @@
   <div class="notes-block">
     <ng-container *ngIf="(notesService.allNotes$ | async) as notes">
       <ng-container *ngFor="let note of notes; let i = index">
-        <app-note [note]="note" ></app-note>
+        <app-note [note]="note" [index]="i"></app-note>
       </ng-container>
     </ng-container>
   </div>
